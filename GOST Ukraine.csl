@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
+<style xmlns="http://purl.org/net/xbiblio/csl" default-locale="uk-UA" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
   <info>
     <title>GOST Ukraine</title>
     <id>http://www.zotero.org/styles/GOST_Ukraine</id>
@@ -20,9 +20,36 @@
     <updated>2013-04-22T02:20:58+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+  <!-- Local terms -->
+  <locale>
+    <terms>
+      <!-- В русской литературе встречается как "номер", так и "выпуск", а иногда и то, и то. При этом в Zotero есть
+			только одно поле issue. В ГОСТ-е рекомендуется использовать то обозначение (№ или вып.), которое используется
+			в самом документе. Но это сделать нереально, поэтому везде (при любом языке) используем № -->
+      <term name="issue" form="symbol">№</term>
+    </terms>
+  </locale>
   <locale xml:lang="en">
     <terms>
-      <term name="chapter" form="short">ch.</term>
+	  <term name="chapter" form="short">ch.</term>
+    </terms>
+  </locale>
+  <locale xml:lang="uk">
+    <terms>  
+      <term name="at">на</term>
+      <term name="in">в</term>
+	  <term name="and">і</term>
+    </terms>
+  </locale>
+  <locale xml:lang="ru">
+    <terms>
+	  <term name="and">и</term>
+      <term name="online">электронный ресурс</term>
+      <term name="letter" form="short">пат.</term>
+      <!-- Английские варианты следующих терминов в ГОСТе не указаны, поэтому в английской локале (выше) остаются те,
+			что есть по-умолчанию -->
+      <term name="accessed">дата обращения</term>
+      <term name="editor" form="verb-short">под ред.</term>
     </terms>
   </locale>
   <!-- Macros -->
@@ -99,14 +126,18 @@
     </group>
   </macro>
   <macro name="title">
+    <text variable="title"/>
+<!--
     <choose>
       <if type="bill book graphic legal_case legislation motion_picture song" match="any">
-        <text variable="title" font-style="italic"/>
+        <text variable="title"/>
+        <text variable="title" font-style="italic"/> 
       </if>
       <else>
         <text variable="title" quotes="true"/>
       </else>
     </choose>
+-->
   </macro>
   <macro name="publisher">
     <choose>
@@ -129,7 +160,7 @@
           <!-- Published Conference Paper -->
           <if variable="container-title">
             <group delimiter=", ">
-              <text variable="container-title" prefix="in " font-style="italic"/>
+              <text variable="container-title" prefix="in "/>
               <text variable="event-place"/>
             </group>
           </if>
@@ -171,19 +202,7 @@
       <text variable="page"/>
     </group>
   </macro>
-  <macro name="citation-locator">
-    <group delimiter=" ">
-      <choose>
-        <if locator="page">
-          <label variable="locator" form="short"/>
-        </if>
-        <else>
-          <label variable="locator" form="short" text-case="capitalize-first"/>
-        </else>
-      </choose>
-      <text variable="locator"/>
-    </group>
-  </macro>
+
   <!-- Citation -->
   <citation collapse="citation-number">
     <sort>
@@ -192,12 +211,11 @@
     <layout delimiter=", ">
       <group prefix="[" suffix="]" delimiter=", ">
         <text variable="citation-number"/>
-        <text macro="citation-locator"/>
       </group>
     </layout>
   </citation>
   <!-- Bibliography -->
-  <bibliography entry-spacing="0" second-field-align="flush">
+  <bibliography entry-spacing="0" line-spacing="1" second-field-align="flush">
     <layout suffix=".">
       <!-- Citation Number -->
       <text variable="citation-number" prefix="" suffix="."/>
@@ -209,7 +227,7 @@
         <if type="article-journal">
           <group delimiter=", ">
             <text macro="title"/>
-            <text variable="container-title" font-style="italic" form="short"/>
+            <text variable="container-title" form="short"/>
             <text macro="locators"/>
             <text macro="page"/>
             <text macro="issued"/>
@@ -246,7 +264,7 @@
         <else-if type="webpage post-weblog" match="any">
           <group delimiter=", " suffix=". ">
             <text macro="title"/>
-            <text variable="container-title" font-style="italic"/>
+            <text variable="container-title"/>
             <text macro="issued"/>
           </group>
           <text macro="access"/>
@@ -271,7 +289,7 @@
         <else-if type="article-magazine article-newspaper broadcast interview manuscript map patent personal_communication song speech thesis webpage" match="any">
           <group delimiter=", ">
             <text macro="title"/>
-            <text variable="container-title" font-style="italic"/>
+            <text variable="container-title"/>
             <text macro="locators"/>
             <text macro="publisher"/>
             <text macro="page"/>
@@ -281,7 +299,7 @@
         <else-if type="chapter paper-conference" match="any">
           <group delimiter=", " suffix=", ">
             <text macro="title"/>
-            <text variable="container-title" prefix="in " font-style="italic"/>
+            <text variable="container-title" prefix="in "/>
             <text macro="locators"/>
           </group>
           <text macro="editor" suffix=" "/>
@@ -294,7 +312,7 @@
         <else>
           <group delimiter=", " suffix=". ">
             <text macro="title"/>
-            <text variable="container-title" font-style="italic"/>
+            <text variable="container-title"/>
             <text macro="locators"/>
           </group>
           <group delimiter=", ">
