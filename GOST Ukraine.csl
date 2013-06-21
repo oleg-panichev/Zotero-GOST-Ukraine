@@ -126,7 +126,7 @@
     </group>
   </macro>
   <macro name="title">
-    <text variable="title"/>
+    <text variable="title" suffix=" / "/>
 <!--
     <choose>
       <if type="bill book graphic legal_case legislation motion_picture song" match="any">
@@ -220,25 +220,27 @@
       <!-- Citation Number -->
       <text variable="citation-number" prefix="" suffix="."/>
       <!-- Author(s) -->
-      <text macro="author" suffix=", "/>
+      <text macro="author" suffix=" "/>
       <!-- Rest of Citation -->
       <choose>
         <!-- Specific Formats -->
         <if type="article-journal">
-          <group delimiter=", ">
+          <group delimiter="">
             <text macro="title"/>
-            <text variable="container-title" form="short"/>
-            <text macro="locators"/>
+			<text macro="author" suffix=". - "/>
+            <text variable="container-title" form="short" suffix=". - "/>
+            <text macro="locators" suffix=", "/>
+			<text macro="issued" suffix=". - "/>
             <text macro="page"/>
-            <text macro="issued"/>
           </group>
         </if>
         <else-if type="paper-conference">
-          <group delimiter=", ">
+          <group delimiter="">
             <text macro="title"/>
-            <text macro="event"/>
-            <text macro="issued"/>
-            <text macro="locators"/>
+			<text macro="author" suffix=". - "/>
+            <text macro="event" suffix=". - "/>
+            <text macro="locators" suffix=", "/>
+            <text macro="issued" suffix=". - "/>
             <text macro="page"/>
           </group>
         </else-if>
